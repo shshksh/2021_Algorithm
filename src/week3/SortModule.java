@@ -34,10 +34,9 @@ public class SortModule {
     public void insertionSort(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
             int insertedValue = arr[i];
-            int j = i;
-            while (j-- > 0) {
-                if (arr[j] > insertedValue)
-                    arr[j + 1] = arr[j];
+            int j = i - 1;
+            for (; j >= 0 && arr[j] > insertedValue; j--) {
+                arr[j+1] = arr[j];
             }
             arr[j + 1] = insertedValue;
         }
