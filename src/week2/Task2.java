@@ -50,8 +50,9 @@ public class Task2 {
             if (x == maze.length - 1 && y == maze.length - 1)
                 return true;
 
-            if (!(isInbound(x + direction[0], y + direction[1])
-                    && maze[x + direction[0]][y + direction[1]].equals("2"))) {
+            if (isInbound(x + direction[0], y + direction[1])
+                    && maze[x + direction[0]][y + direction[1]].equals("2")) {
+            } else {
                 for (int i = 0; i < 4; i++) {
                     if (isReachable(x + offset[i][0], y + offset[i][1], offset[i]))
                         return true;

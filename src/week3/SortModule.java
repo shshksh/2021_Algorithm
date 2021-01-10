@@ -4,7 +4,12 @@ import java.util.Random;
 
 public class SortModule {
 
-    Random r = new Random();
+    private final Random r = new Random();
+    private PivotPolicy pivotPolicy;
+
+    public interface PivotPolicy {
+        int choosePivot(int[] arr, int start, int end);
+    }
 
     public void bubbleSort(int[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
@@ -36,7 +41,7 @@ public class SortModule {
             int insertedValue = arr[i];
             int j = i - 1;
             for (; j >= 0 && arr[j] > insertedValue; j--) {
-                arr[j+1] = arr[j];
+                arr[j + 1] = arr[j];
             }
             arr[j + 1] = insertedValue;
         }
@@ -78,6 +83,11 @@ public class SortModule {
         quickSort(arr, 0, arr.length - 1, policy);
     }
 
+    public void quickSort(int[] arr, PivotPolicy pivotPolicy) {
+        this.pivotPolicy = pivotPolicy;
+        quickSort(arr, 0, arr.length - 1);
+    }
+
     private void quickSort(int[] arr, int start, int end, int policy) {
         if (start < end) {
             int mid = partition(arr, start, end, policy);
@@ -86,8 +96,35 @@ public class SortModule {
         }
     }
 
+    private void quickSort(int[] arr, int start, int end) {
+        if (start < end) {
+            int mid = partition(arr, start, end);
+            quickSort(arr, start, mid - 1);
+            quickSort(arr, mid + 1, end);
+        }
+    }
+
     private int partition(int[] arr, int start, int end, int policy) {
         int p = chooseIndex(arr, start, end, policy);
+
+        int tmp = arr[p];
+        arr[p] = arr[end];
+        arr[end] = tmp;
+
+        int i = start - 1;
+        for (int j = start; j <= end; j++) {
+            if (arr[j] <= arr[end]) {
+                i++;
+                tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+            }
+        }
+        return i;
+    }
+
+    private int partition(int[] arr, int start, int end) {
+        int p = pivotPolicy.choosePivot(arr, start, end);
 
         int tmp = arr[p];
         arr[p] = arr[end];

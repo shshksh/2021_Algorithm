@@ -11,15 +11,12 @@ public class TestModule {
     private final int[][] randomData = new int[3][];
     private final int[][] reverseData = new int[3][];
 
-    private final double[][] testResult = new double[7][];
+    private final double[][] testResult = new double[7][6];
 
     public TestModule(SortModule sortModule) {
         this.sortModule = sortModule;
 
         initAllReverseData();
-        for (int i = 0; i < testResult.length; i++) {
-            testResult[i] = new double[6];
-        }
         testResult[4][5] = -1;
     }
 
