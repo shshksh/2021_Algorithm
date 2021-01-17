@@ -63,6 +63,8 @@ public class TestModule {
 
     private void runUnitTest(int[] testData, int dataType) {
         for (int i = 0; i < testResult.length; i++) {
+            if (testData == reverseData[2] && i == 4)
+                continue;
             int[] copyData = Arrays.copyOf(testData, testData.length);
             long start = System.currentTimeMillis();
             sortBy(copyData, i);
@@ -85,14 +87,21 @@ public class TestModule {
                 sortModule.mergeSort(testData);
                 break;
             case 4:
-                if (testData.length <= 10000)
-                sortModule.quickSort(testData, 0);
+                sortModule.quickSort(testData, (arr, start, end) -> end);
                 break;
             case 5:
-                sortModule.quickSort(testData, 1);
+                sortModule.quickSort(testData, (arr, start, end) -> {
+                    int p = start;
+                    if (arr[p] < arr[end])
+                        p = end;
+                    if (arr[p] > arr[(start + end) / 2])
+                        p = (start + end) / 2;
+                    return p;
+                });
                 break;
             case 6:
-                sortModule.quickSort(testData, 2);
+                sortModule.quickSort(testData,
+                        (arr, start, end) -> r.nextInt(end - start + 1) + start);
                 break;
         }
     }
