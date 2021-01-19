@@ -158,4 +158,36 @@ public class SortModule {
                 return end;
         }
     }
+
+    public void heapSort(int[] arr) {
+        buildMaxHeap(arr);
+        int heapSize = arr.length;
+        for (int i = heapSize - 1; i >= 0; i--) {
+            int tmp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = tmp;
+            heapSize--;
+            maxHeapify(arr, 0, heapSize);
+        }
+    }
+
+    private void buildMaxHeap(int[] arr) {
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            maxHeapify(arr, i, arr.length);
+        }
+    }
+
+    private void maxHeapify(int[] arr, int i, int heapSize) {
+        while (i * 2 + 1 < heapSize) {
+            int k = i * 2 + 1;
+            if (k + 1 < heapSize && arr[k] < arr[k + 1])
+                k++;
+            if (arr[i] >= arr[k])
+                return;
+            int tmp = arr[i];
+            arr[i] = arr[k];
+            arr[k] = tmp;
+            i = k;
+        }
+    }
 }

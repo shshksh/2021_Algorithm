@@ -11,7 +11,7 @@ public class TestModule {
     private final int[][] randomData = new int[3][];
     private final int[][] reverseData = new int[3][];
 
-    private final double[][] testResult = new double[7][6];
+    private final double[][] testResult = new double[9][6];
 
     public TestModule(SortModule sortModule) {
         this.sortModule = sortModule;
@@ -102,6 +102,12 @@ public class TestModule {
             case 6:
                 sortModule.quickSort(testData,
                         (arr, start, end) -> r.nextInt(end - start + 1) + start);
+                break;
+            case 7:
+                sortModule.heapSort(testData);
+                break;
+            case 8:
+                Arrays.sort(testData);
                 break;
         }
     }
