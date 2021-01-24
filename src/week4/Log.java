@@ -40,4 +40,18 @@ public class Log {
     public String getStatus() {
         return status;
     }
+
+    public String toTimeOrder() {
+        return time + "\n" +
+                "\t" + ip + "\n" +
+                "\t" + url + "\n" +
+                "\t" + status + "\n";
+    }
+
+    public String toIpOrder() {
+        return ip + "\n" +
+                "\t" + time + "\n" +
+                "\t" + url + "\n" +
+                "\t" + status + "\n";
+    }
 }

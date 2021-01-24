@@ -45,9 +45,6 @@ public class LogList {
             case "-ip":
                 Arrays.sort(logs, 0, itemCount, Log.ipComparator);
                 break;
-            default:
-                System.out.println("Wrong option");
-                return;
         }
         sortBy = option;
     }
@@ -55,20 +52,12 @@ public class LogList {
     public void printLogs() {
         switch (sortBy) {
             case "-t":
-                for (int i = 0; i < itemCount; i++) {
-                    System.out.println(logs[i].getTime());
-                    System.out.println("\t" + "IP: " + logs[i].getIp());
-                    System.out.println("\t" + "URL: " + logs[i].getUrl());
-                    System.out.println("\t" + "Status: " + logs[i].getStatus());
-                }
+                for (int i = 0; i < itemCount; i++)
+                    System.out.println(logs[i].toTimeOrder());
                 break;
             case "-ip":
-                for (int i = 0; i < itemCount; i++) {
-                    System.out.println(logs[i].getIp());
-                    System.out.println("\t" + "Time: " + logs[i].getTime());
-                    System.out.println("\t" + "URL: " + logs[i].getUrl());
-                    System.out.println("\t" + "Status: " + logs[i].getStatus());
-                }
+                for (int i = 0; i < itemCount; i++)
+                    System.out.println(logs[i].toIpOrder());
                 break;
         }
     }
