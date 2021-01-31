@@ -13,12 +13,27 @@ public class AddressTree {
             sc.nextLine();
 
             while (sc.hasNextLine()) {
-                insert(sc.nextLine().split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)"));
+                insert(parseCSV(sc.nextLine()));
             }
             sc.close();
         } catch (FileNotFoundException e) {
             System.out.println("No exist such file.");
         }
+    }
+
+    private String[] parseCSV(String nextLine) {
+        String[] data = new String[6];
+        int nextIndex;
+        for (int i = 0; i < 5; i++) {
+            if (nextLine.startsWith("\""))
+                nextIndex = nextLine.indexOf("\"", 1) + 1;
+            else
+                nextIndex = nextLine.indexOf(",");
+            data[i] = nextLine.substring(0, nextIndex);
+            nextLine = nextLine.substring(nextIndex + 1);
+        }
+        data[5] = nextLine;
+        return data;
     }
 
     private void insert(String[] data) {
@@ -93,7 +108,7 @@ public class AddressTree {
     }
 
     public void delete(String targetName) {
-        Node target = find(root, targetName), substitute, parent;
+        Node target = find(root, targetName);
         if (target != null)
             delete(target);
     }

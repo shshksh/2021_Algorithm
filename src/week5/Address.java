@@ -2,7 +2,7 @@ package week5;
 
 import java.util.StringJoiner;
 
-public class Address {
+public class Address implements Comparable<String>{
     private final String name;
     private final String company;
     private final String address;
@@ -29,10 +29,6 @@ public class Address {
                 "\t" + "Email: " + email + '\n';
     }
 
-    public String getName() {
-        return name;
-    }
-
     public String saveFormat() {
         StringJoiner sj = new StringJoiner(",");
         return sj.add(name)
@@ -42,5 +38,10 @@ public class Address {
                 .add(phone)
                 .add(email)
                 .toString();
+    }
+
+    @Override
+    public int compareTo(String other) {
+        return other.compareTo(name);
     }
 }

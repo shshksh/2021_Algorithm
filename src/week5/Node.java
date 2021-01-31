@@ -22,7 +22,7 @@ public class Node implements Comparable<String> {
 
     @Override
     public int compareTo(String name) {
-        return name.compareTo(value.getName());
+        return value.compareTo(name);
     }
 
     public String toSaveFormat() {
