@@ -6,19 +6,20 @@ import java.util.*;
 
 public class LocationGraph {
     private final Map<String, Location> locations = new HashMap<>();
-    private final Map<Location, List<Location>> graph = new HashMap<>();
 
-    public void init(String fileName) {
-        File file = new File("res/week6/" + fileName);
+    public LocationGraph() {
+        init();
+    }
+
+    public void init() {
+        File file = new File("res/week6/alabama.txt");
 
         try {
             Scanner sc = new Scanner(file);
 
             while (sc.hasNextLine()) {
                 String[] data = sc.nextLine().split("\t");
-                Location location = new Location(data);
-                locations.put(data[0], location);
-                graph.put(location, new ArrayList<>());
+                locations.put(data[0], new Location(data));
             }
             sc.close();
 
@@ -50,7 +51,7 @@ public class LocationGraph {
     private void linkLocation(String srcName, String dstName) throws CloneNotSupportedException {
         Location src = locations.get(srcName);
         Location dst = locations.get(dstName);
-        graph.get(src).add(dst.clone(src));
+        src.addAdjLocation(dst.clone(src));
     }
 
     public void bfs(String target) {
@@ -68,7 +69,8 @@ public class LocationGraph {
             System.out.println("Hop " + i + ":");
             int qSize = q.size();
             for (int j = 0; j < qSize; j++) {
-                for (Location location : graph.get(q.poll())) {
+                src = q.poll();
+                for (Location location : src.getAdj()) {
                     Location next = locations.get(location.getPlace());
                     if (!visited.contains(next)) {
                         q.offer(next);
@@ -86,13 +88,13 @@ public class LocationGraph {
             System.out.println("Wrong location");
             return;
         }
-        dfs(location, new HashSet<Location>());
+        dfs(location, new HashSet<>());
     }
 
     private void dfs(Location location, HashSet<Location> visited) {
         visited.add(location);
         System.out.println(location);
-        for (Location adj : graph.get(location)) {
+        for (Location adj : location.getAdj()) {
             Location next = locations.get(adj.getPlace());
             if (!visited.contains(next)) {
                 dfs(next, visited);

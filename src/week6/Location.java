@@ -1,10 +1,14 @@
 package week6;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Location implements Cloneable {
-    private String place;
-    private Double longitude;
-    private Double latitude;
+    private final String place;
+    private final Double longitude;
+    private final Double latitude;
     private Double weight = 0.0;
+    private List<Location> adj = new ArrayList<>();
 
 
     public Location(String[] data) {
@@ -43,6 +47,10 @@ public class Location implements Cloneable {
         return rad * (double) 180 / Math.PI;
     }
 
+    public void addAdjLocation(Location location) {
+        adj.add(location);
+    }
+
     @Override
     public String toString() {
         return "Location{" +
@@ -54,5 +62,9 @@ public class Location implements Cloneable {
 
     public String getPlace() {
         return place;
+    }
+
+    public List<Location> getAdj() {
+        return adj;
     }
 }
